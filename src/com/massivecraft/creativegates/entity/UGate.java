@@ -1,6 +1,9 @@
 package com.massivecraft.creativegates.entity;
 
 import com.massivecraft.creativegates.CreativeGates;
+import com.massivecraft.creativegates.util.ModeUtil;
+import com.massivecraft.creativegates.util.VoidUtil;
+import com.massivecraft.massivecore.Couple;
 import com.massivecraft.massivecore.mixin.MixinTeleport;
 import com.massivecraft.massivecore.mixin.TeleporterException;
 import com.massivecraft.massivecore.ps.PS;
@@ -149,26 +152,9 @@ public class UGate extends Entity<UGate>
 		boolean enter = this.isEnterEnabled();
 		boolean exit = this.isExitEnabled();
 		
-		if (enter == false && exit == false)
-		{
-			this.setEnterEnabled(true);
-			this.setExitEnabled(false);
-		}
-		else if (enter == true && exit == false)
-		{
-			this.setEnterEnabled(false);
-			this.setExitEnabled(true);
-		}
-		else if (enter == false && exit == true)
-		{
-			this.setEnterEnabled(true);
-			this.setExitEnabled(true);
-		}
-		else if (enter == true && exit == true)
-		{
-			this.setEnterEnabled(false);
-			this.setExitEnabled(false);
-		}
+		Couple<Boolean, Boolean> next = ModeUtil.getNext(enter, exit);
+		this.setEnterEnabled(next.getFirst());
+		this.setExitEnabled(next.getSecond());
 	}
 	
 	// -------------------------------------------- //
@@ -186,7 +172,7 @@ public class UGate extends Entity<UGate>
 			if ( ! ugate.isExitEnabled()) continue;
 			
 			PS destinationPs = ugate.getExit();
-			String destinationDesc = (MConf.get().teleportationMessageActive ? "the gate destination" : "");
+			String destinationDesc = (MConf.get().teleportationMessageActive ? MLang.get().gateDestinationDescription : "");
 			Destination destination = new DestinationSimple(destinationPs, destinationDesc);
 			
 			try
@@ -202,7 +188,7 @@ public class UGate extends Entity<UGate>
 			}
 		}
 		
-		message = Txt.parse("<i>This gate does not seem to lead anywhere.");
+		message = Txt.parse(MLang.get().gateDoesntLeadAnywhere);
 		player.sendMessage(message);
 	}
 	
@@ -265,7 +251,7 @@ public class UGate extends Entity<UGate>
 		
 		for (Block block : blocks)
 		{
-			if (CreativeGates.isVoid(block))
+			if (VoidUtil.isVoid(block))
 			{
 				return false;
 			}
@@ -297,7 +283,7 @@ public class UGate extends Entity<UGate>
 		{
 			Material blockMaterial = block.getType();
 			
-			if (blockMaterial != Material.PORTAL && blockMaterial != Material.STATIONARY_WATER && blockMaterial != Material.WATER && ! CreativeGates.isVoid(blockMaterial)) continue;
+			if (blockMaterial != Material.PORTAL && blockMaterial != Material.STATIONARY_WATER && blockMaterial != Material.WATER && VoidUtil.isntVoid(blockMaterial)) continue;
 			
 			block.setType(material);
 			

@@ -2,8 +2,15 @@ package com.massivecraft.creativegates;
 
 import com.massivecraft.creativegates.cmd.CmdCg;
 import com.massivecraft.creativegates.cmd.type.TypePermissionDefault;
+import com.massivecraft.creativegates.engine.EngineDestroyGate;
+import com.massivecraft.creativegates.engine.EnginePigmenSpawn;
+import com.massivecraft.creativegates.engine.EngineStabilize;
+import com.massivecraft.creativegates.engine.EngineTools;
+import com.massivecraft.creativegates.engine.EngineUseGate;
+import com.massivecraft.creativegates.engine.EngineVanillaGate;
 import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.creativegates.entity.MConfColl;
+import com.massivecraft.creativegates.entity.MLangColl;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.index.IndexCombined;
@@ -13,21 +20,10 @@ import com.massivecraft.massivecore.MassivePlugin;
 import com.massivecraft.massivecore.Multiverse;
 import com.massivecraft.massivecore.command.type.RegistryType;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.permissions.PermissionDefault;
-
-import java.util.EnumSet;
-import java.util.Set;
 
 public class CreativeGates extends MassivePlugin
 {
-	// -------------------------------------------- //
-	// CONSTANTS
-	// -------------------------------------------- //
-	
-	public final static Set<Material> VOID_MATERIALS = EnumSet.of(Material.AIR); 
-	
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
 	// -------------------------------------------- //
@@ -72,18 +68,24 @@ public class CreativeGates extends MassivePlugin
 		// Index
 		this.getIndex().clear();
 		
-		// types
+		// Types
 		RegistryType.register(PermissionDefault.class, TypePermissionDefault.get());
 		
 		// Activate
 		this.activate(
 			// Coll
 			MConfColl.class,
+			MLangColl.class,
 			UConfColls.class,
 			UGateColls.class,
 		
 			// Engine
-			EngineMain.class,
+			EngineTools.class,
+			EngineStabilize.class,
+			EngineVanillaGate.class,
+			EnginePigmenSpawn.class,
+			EngineDestroyGate.class,
+			EngineUseGate.class,
 			
 			// Command
 			CmdCg.class
@@ -105,20 +107,6 @@ public class CreativeGates extends MassivePlugin
 	{
 		this.getIndex().clear();
 		super.onDisable();
-	}
-	
-	// -------------------------------------------- //
-	// UTIL
-	// -------------------------------------------- //
-	
-	public static boolean isVoid(Material material)
-	{
-		return VOID_MATERIALS.contains(material);
-	}
-	
-	public static boolean isVoid(Block block)
-	{
-		return isVoid(block.getType());
 	}
 	
 }

@@ -22,6 +22,7 @@ public class CmdCg extends MassiveCommand
 	
 	public CmdCgWorld cmdCgWorld = new CmdCgWorld();
 	public CmdCgConfig cmdCgConfig = new CmdCgConfig();
+	public CmdCgLang cmdCgLang = new CmdCgLang();
 	public CmdCgVersion cmdCgVersion = new CmdCgVersion();
 	
 	// -------------------------------------------- //
@@ -33,6 +34,7 @@ public class CmdCg extends MassiveCommand
 		// Children
 		this.addChild(this.cmdCgWorld);
 		this.addChild(this.cmdCgConfig);
+		this.addChild(this.cmdCgLang);
 		this.addChild(this.cmdCgVersion);
 		
 		// Requirements

@@ -37,6 +37,7 @@ public class MConf extends Entity<MConf>
 	public List<String> aliasesCgWorldList = MUtil.list("list");
 	public List<String> aliasesCgWorldDelete = MUtil.list("delete");
 	public List<String> aliasesCgConfig = MUtil.list("config");
+	public List<String> aliasesCgLang = MUtil.list("lang");
 	public List<String> aliasesCgVersion = MUtil.list("v", "version");
 	
 	public boolean teleportationSoundActive = true;

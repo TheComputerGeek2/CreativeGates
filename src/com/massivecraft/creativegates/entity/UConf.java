@@ -90,4 +90,12 @@ public class UConf extends Entity<UConf>
 	public Material getMaterialMode() { return this.materialMode; }
 	public void setMaterialMode(Material materialMode) { this.materialMode = materialMode; this.changed(); }
 	
+	private boolean toolCreatePermissionVerbose = true;
+	public boolean isToolCreatePermissionVerbose() { return this.toolCreatePermissionVerbose; }
+	public void setToolCreatePermissionVerbose(boolean toolCreatePermissionVerbose) { this.toolCreatePermissionVerbose = toolCreatePermissionVerbose; this.changed(); }
+	
+	private boolean usePermissionVerbose = true;
+	public boolean isUsePermissionVerbose() { return this.usePermissionVerbose; }
+	public void setUsePermissionVerbose(boolean usePermissionVerbose) { this.usePermissionVerbose = usePermissionVerbose; this.changed(); }
+	
 }

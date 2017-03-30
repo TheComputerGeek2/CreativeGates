@@ -1,13 +1,15 @@
-package com.massivecraft.creativegates;
+package com.massivecraft.creativegates.util;
 
-import com.massivecraft.creativegates.entity.UConf;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-
-import java.util.AbstractMap.SimpleEntry;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.AbstractMap.SimpleEntry;
+
+import com.massivecraft.creativegates.GateOrientation;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+
+import com.massivecraft.creativegates.entity.UConf;
 
 public class FloodUtil
 {
@@ -53,27 +55,17 @@ public class FloodUtil
 		// Add in the frame as well.
 		blocks = expandedByOne(blocks, gateOrientaion.expandFaces);
 		
-		return new SimpleEntry<>(gateOrientaion, blocks);
+		return new SimpleEntry<GateOrientation, Set<Block>>(gateOrientaion, blocks);
 	}
 	
 	public static Set<Block> getFloodBlocks(Block startBlock, Set<Block> foundBlocks, Set<BlockFace> expandFaces, int maxarea)
 	{
-		if (foundBlocks == null)
-		{
-			return null;
-		}
+		if (foundBlocks == null) { return null; }
+		if  (foundBlocks.size() > maxarea) { return null; }
 		
-		if  (foundBlocks.size() > maxarea)
-		{
-			return null;
-		}
+		if (foundBlocks.contains(startBlock)) { return foundBlocks; }
 		
-		if (foundBlocks.contains(startBlock))
-		{
-			return foundBlocks;
-		}
-		
-		if (CreativeGates.isVoid(startBlock))
+		if (VoidUtil.isVoid(startBlock))
 		{
 			// ... We found a block :D ...
 			foundBlocks.add(startBlock);
@@ -91,7 +83,7 @@ public class FloodUtil
 	
 	public static Set<Block> expandedByOne(Set<Block> blocks, Set<BlockFace> expandFaces)
 	{
-		Set<Block> ret = new HashSet<>();
+		Set<Block> ret = new HashSet<Block>();
 		
 		ret.addAll(blocks);
 		
@@ -107,4 +99,5 @@ public class FloodUtil
 		
 		return ret;
 	}
+	
 }
